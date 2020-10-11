@@ -7,7 +7,6 @@ let urls = {
 const proxyurl = "https://cors-anywhere.herokuapp.com/";
 
 let txtFullName = document.querySelector("#txtFullName");
-let gridRadios = document.querySelector("input[name='gridRadios']");
 let lblFullName = document.querySelector("#lblFullName");
 let lgdCandidate = document.querySelector("#lgdCandidate");
 let divMessage = document.querySelector("#divMessage");
@@ -22,8 +21,8 @@ document.querySelector("#frmVote").addEventListener("submit", (e) => {
         lblFullName.style.color = "red";
         valid = false;
     }
-
-    if(!gridRadios.checked)
+    
+    if(!document.querySelector('input[name="gridRadios"]:checked'))
     {
         lgdCandidate.style.color = "red";
         valid = false;
@@ -35,13 +34,13 @@ document.querySelector("#frmVote").addEventListener("submit", (e) => {
         CastVote();
 });
 
-gridRadios.addEventListener("change", () => lgdCandidate.style.color = "#212529" );
+document.querySelector("input[name='gridRadios']").addEventListener("change", () => lgdCandidate.style.color = "#212529" );
 
 txtFullName.addEventListener("change", (e) => {
     if(e.target.value == "")
         lblFullName.style.color = "red";
     else
-    lblFullName.style.color = "#212529";
+        lblFullName.style.color = "#212529";
 });
 
 let CastVote = () => {
@@ -55,7 +54,7 @@ let CastVote = () => {
         },
         body: JSON.stringify({
             voter : txtFullName.value,
-            candidate : gridRadios.value
+            candidate : document.querySelector('input[name="gridRadios"]:checked').value
         })
     })
     .then(response => {
